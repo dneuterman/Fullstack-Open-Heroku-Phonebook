@@ -11,6 +11,7 @@ const cors = require('cors')
 //   next()
 // }
 
+app.use(express.static('build'))
 app.use(cors())
 app.use(express.json())
 // app.use(requestLogger)
