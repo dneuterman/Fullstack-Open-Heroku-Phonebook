@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
+const cors = require('cors')
 
 const requestLogger = (req, res, next) => {
   console.log('Method:', req.method)
@@ -10,6 +11,7 @@ const requestLogger = (req, res, next) => {
   next()
 }
 
+app.use(cors())
 app.use(express.json())
 app.use(requestLogger)
 app.use(morgan(':method :url :response-time'))
@@ -95,6 +97,7 @@ const unknownEndpoint = (req, res) => {
 
 app.use(unknownEndpoint)
 
-const port = 3001
-app.listen(port)
-console.log(`Server running on port ${port}`)
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
