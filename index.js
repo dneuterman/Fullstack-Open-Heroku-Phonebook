@@ -1,20 +1,20 @@
 const express = require('express')
 const app = express()
-const morgan = require('morgan')
+// const morgan = require('morgan')
 const cors = require('cors')
 
-const requestLogger = (req, res, next) => {
-  console.log('Method:', req.method)
-  console.log('Path:  ', req.path)
-  console.log('Body:  ', req.body)
-  console.log('---')
-  next()
-}
+// const requestLogger = (req, res, next) => {
+//   console.log('Method:', req.method)
+//   console.log('Path:  ', req.path)
+//   console.log('Body:  ', req.body)
+//   console.log('---')
+//   next()
+// }
 
 app.use(cors())
 app.use(express.json())
 app.use(requestLogger)
-app.use(morgan(':method :url :response-time'))
+// app.use(morgan(':method :url :response-time'))
 
 let persons = [
   {
