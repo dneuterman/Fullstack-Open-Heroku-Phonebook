@@ -38,9 +38,9 @@ app.get('/api/persons', (req,res) => {
 })
 
 app.get('/api/persons/:id', (req,res) => {
-  Person.findById(req.params.id).then([person => {
+  Person.findById(req.params.id).then(person => {
     res.json(person)
-  }])
+  }).catch(error => next(error))
 })
 
 app.post('/api/persons', (req,res) => {
