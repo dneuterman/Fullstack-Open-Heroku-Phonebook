@@ -43,23 +43,8 @@ app.get('/api/persons/:id', (req,res) => {
   }).catch(error => next(error))
 })
 
-app.post('/api/persons', (req,res) => {
+app.post('/api/persons', (req,res,next) => {
   const body = req.body
-  console.log(body.name, body.number)
-  if(!body.name || !body.number) {
-    return res.status(400).json({
-      error: "name or number missing"
-    })
-  }
-
-  const checkPersonName = Person.exists({name: body.name})
-  console.log(checkPersonName)
-
-  // if(Person.find(person => person.name === body.name)) {
-  //   return res.status(400).json({
-  //     error: "name must be unique"
-  //   })
-  // }
 
   const person = new Person ({
     name: body.name,
@@ -68,9 +53,12 @@ app.post('/api/persons', (req,res) => {
     //id: Math.random()*10000 not needed for MongoDB
   })
 
-  person.save().then(savedPerson => {
-    res.json(savedPerson)
-  })
+  person
+    .save().then(savedPerson => savedPerson.toJSON())
+    .then(savedAndFormattedPerson => {
+      res.json(savedAndFormattedPerson)
+    })
+    .catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (req, res, next) => {
